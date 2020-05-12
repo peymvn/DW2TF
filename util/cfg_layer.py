@@ -159,7 +159,7 @@ def cfg_yolo(B, H, W, C, net, param, weights_walker, stack, output_index, scope,
 
 def cfg_upsample(B, H, W, C, net, param, weights_walker, stack, output_index, scope, training, const_inits, verbose):
     stride = int(param['stride'])
-    print(stride)
+    print(param)
     assert stride == 2
 
     net = tf.image.resize_nearest_neighbor(net, (H * stride, W * stride), name=scope)
