@@ -47,6 +47,7 @@ def parse_net(num_layers, cfg, weights, training=False, const_inits=True, verbos
 def main(args):
     ckpt_path = os.path.join(args.output, os.path.splitext(os.path.split(args.cfg)[-1])[0] + ".ckpt")
     pb_path = os.path.join(args.output, os.path.splitext(os.path.split(args.cfg)[-1])[0] + ".pb")
+    pbtxt_path = os.path.join(args.output, os.path.splitext(os.path.split(args.cfg)[-1])[0] + ".pbtxt")
 
     # ----------------------------------------------------------
     # Save temporary .ckpt from graph containing pre-trained
@@ -61,6 +62,7 @@ def main(args):
     with tf.Session(graph=graph) as sess:
         sess.run(tf.global_variables_initializer())
         saver.save(sess, ckpt_path, write_meta_graph=False)
+        tf.train.write_graph(sess.graph.as_graph_def(), '.', pbtxt_path, as_text=True)
 
     # ----------------------------------------------------------
     # Save .pb, .meta and final .ckpt by restoring weights
